@@ -1,3 +1,9 @@
+# Passos para loing e deploy imagens no ECR
+aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/d8c3a2d2
+docker build -t ecs-players-repo .
+docker tag ecs-players-repo:1.0.0 public.ecr.aws/d8c3a2d2/ecs-players-repo:1.0.0
+docker push public.ecr.aws/d8c3a2d2/ecs-players-repo:1.0.0
+docker run -t -d -i -p 80:80 ecs-players-repo
 # NgEcsApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.2.
