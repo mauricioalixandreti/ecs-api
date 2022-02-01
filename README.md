@@ -1,8 +1,8 @@
 # Passos para loing e deploy imagens no ECR
 aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/d8c3a2d2
 docker build -t ecs-players-repo .
-docker tag ecs-players-repo:latest public.ecr.aws/d8c3a2d2/ecs-players-repo:latest
-docker push public.ecr.aws/d8c3a2d2/ecs-players-repo:latest
+docker tag ecs-players-repo:latest public.ecr.aws/d8c3a2d2/ecs-players-repo:gray
+docker push public.ecr.aws/d8c3a2d2/ecs-players-repo:gray
 docker run -t -d -i -p 80:80 ecs-players-repo
 ## Para importar csv com credenciais aws do IAM
 aws configure import --csv file://credentials.csv
