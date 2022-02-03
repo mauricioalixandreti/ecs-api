@@ -49,12 +49,6 @@ jobs:
 
     steps:
 
-    - name: Run within Docker
-      uses: mosteo-actions/docker-run@v1
-      with:
-        command:  run
-        params: --max-concurrent-uploads 1
-
     - name: Checkout
       uses: actions/checkout@v2
 
@@ -71,6 +65,12 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Edit max push
+      id: max-push
+      run: |
+        # Build a docker container and
+        docker run --max-concurrent-uploads=1
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
