@@ -1,7 +1,8 @@
 ### STAGE 1: Build ###
 
 # We label our stage as 'builder'
-FROM node:14 as builder
+#FROM node:14 as builder
+FROM node:alpine3.14 as builder
 
 WORKDIR /app
 
