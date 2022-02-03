@@ -80,7 +80,7 @@ jobs:
         # be deployed to ECS.
         docker build -t $ECR_REPOSITORY:$IMAGE_TAG_SHA .
         docker tag $ECR_REPOSITORY:$IMAGE_TAG_SHA $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --max-concurrent-uploads 1
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
     - name: Fill in the new image ID in the Amazon ECS task definition
