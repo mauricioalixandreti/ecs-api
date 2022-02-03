@@ -32,7 +32,7 @@ on:
       - feature/gray
 
 env:
-  AWS_REGION: us-east-2                       # set this to your preferred AWS region, e.g. us-west-1
+  AWS_REGION: us-east-1                       # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: ng-frontend           # set this to your Amazon ECR repository name
   ECS_SERVICE: ng-ecs-gray                 # set this to your Amazon ECS service name
   ECS_CLUSTER: ng-ecs-cluster2                     # set this to your Amazon ECS cluster name
@@ -55,16 +55,18 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        #aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        #aws-region: ${{ env.AWS_REGION }}
-        aws-access-key-id: AKIAXFMQN4MBJUYUYFUI
-        aws-secret-access-key: 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
-        aws-region: us-east-2
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+        AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
 
     - name: Edit max push
       id: max-push
