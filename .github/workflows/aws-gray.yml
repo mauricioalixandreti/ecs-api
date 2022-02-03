@@ -72,7 +72,7 @@ jobs:
       id: max-push
       run: |
         # Build a docker container and
-        dockerd --max-concurrent-uploads=1
+        sudo dockerd --max-concurrent-uploads=1
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
