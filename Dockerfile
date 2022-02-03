@@ -3,14 +3,16 @@
 # We label our stage as 'builder'
 FROM node:14 as builder
 
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .
 
 RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
 
 ## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm i && mkdir /ng-app
+RUN npm i --silent
 
-RUN ls -l
+RUN ls -l ./
+
+RUN ls -l node_modules
 
 COPY node_modules ./ng-app
 
