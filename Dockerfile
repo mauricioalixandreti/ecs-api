@@ -3,22 +3,34 @@
 # We label our stage as 'builder'
 FROM node:14 as builder
 
-COPY package.json package-lock.json .
+WORKDIR /app
 
-RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
+COPY package.json package.json
 
-## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm i --silent
+COPY package-lock.json package-lock.json
 
-RUN ls -l ./
-
-RUN ls -l node_modules
-
-COPY node_modules ./ng-app
-
-WORKDIR /ng-app
+RUN npm  i --silent
 
 COPY . .
+
+#RUN ng build --prod
+
+#COPY package.json package-lock.json ./
+
+#RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
+
+## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
+#RUN npm i --silent
+
+#RUN ls -l ./
+
+#RUN ls -l node_modules
+
+#COPY node_modules ./ng-app
+
+#WORKDIR /ng-app
+
+#COPY . .
 
 ## Build the angular app in production mode and store the artifacts in dist folder
 RUN $(npm bin)/ng build
@@ -38,6 +50,6 @@ COPY nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
 
 ## From 'builder' stage copy over the artifacts in dist folder to default nginx public folder
-COPY --from=builder /ng-app/dist/ng-ecs-app /usr/share/nginx/html
+COPY --from=builder /app/dist/ng-ecs-app /usr/share/nginx/html
 
 EXPOSE 90
