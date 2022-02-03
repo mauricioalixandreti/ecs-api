@@ -68,12 +68,6 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
         AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
 
-    - name: Edit max push
-      id: max-push
-      run: |
-        # Build a docker container and
-        sudo dockerd --max-concurrent-uploads=1
-
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
