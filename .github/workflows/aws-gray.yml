@@ -59,7 +59,7 @@ jobs:
         #aws-region: ${{ env.AWS_REGION }}
         aws-access-key-id: AKIAXFMQN4MBJUYUYFUI
         aws-secret-access-key: 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
-        aws-region: us-east-1
+        aws-region: us-east-2
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -74,8 +74,9 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t 492613526274.dkr.ecr.us-west-2.amazonaws.com/ng-frontend:$IMAGE_TAG .
-        docker push 492613526274.dkr.ecr.us-west-2.amazonaws.com/ng-frontend:$IMAGE_TAG
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker tag $ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
     - name: Fill in the new image ID in the Amazon ECS task definition
