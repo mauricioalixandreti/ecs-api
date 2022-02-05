@@ -4,7 +4,7 @@
       {
           "name": "container-ng-ecs-gray",
           "image": "492613526274.dkr.ecr.us-west-2.amazonaws.com/ng-frontend:latest",
-          "cpu": 0,
+          "cpu": 0.25,
           "links": [],
           "portMappings": [
               {
